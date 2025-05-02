@@ -1,41 +1,54 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         ArrayList<String> al = new ArrayList<>();
+        boolean doNotExit = true;
 
-        System.out.println("Input a username, please!");
+        //*while doNotExit is true, always loop program*//
 
-        User user = new User();
-        user.setUsername();
+        while (doNotExit) {
+            System.out.println("Input a username, please!");
 
-        System.out.println("Username is:" + user.getUsername());
+            userNameEnter user = new userNameEnter();
+            user.setUsername();
 
-        System.out.println("Add " + user.getUsername() + " to array?");
-        System.out.print("'Y' for yes, 'N' for no.");
-        String arrayEnter = input.next();
+            System.out.println("Username is:" + user.getUsername());
 
-        if (arrayEnter.contains("Y")||arrayEnter.contains("y")){
-          al.add(user.getUsername());
-        } else if (arrayEnter.contains("N")||arrayEnter.contains("n")){
-        } else {
-            System.out.println("Error, please enter either 'Y' or 'N'.");
-                    arrayEnter = input.next();
-        }
+            System.out.println("Add " + user.getUsername() + " to array?");
+            System.out.print("'Y' for yes, 'N' for no.");
+            String arrayEnter = input.next();
 
-        System.out.println("Do you have more usernames to add? (Y/N)");
-        arrayEnter = input.next();
+            if (arrayEnter.equalsIgnoreCase("Y")) {
+                al.add(user.getUsername());
+            } else if (arrayEnter.equalsIgnoreCase("N")) {
+                System.out.println("Exit? Y/N");
+                String exitEarly = input.next();
+                if (exitEarly.equalsIgnoreCase("Y")) {
+                    break;
+                } else if (exitEarly.equalsIgnoreCase("N")){
+                    continue;
+                }
 
-        if (arrayEnter.contains("Y")||arrayEnter.contains("y")){
-            System.out.println("How many more?");
+            } else {
+                System.out.println("Error, please enter either 'Y' or 'N'.");
+            }
+
+            System.out.println("Do you have more usernames to add? (Y/N)");
+            arrayEnter = input.next();
+
+            if (arrayEnter.equalsIgnoreCase("Y")) //*changing to IgnoreCase*// {
+                System.out.println("How many more?");
             int count = input.nextInt();
 
-            for (int i = 0; i < count; i++){
-                if (arrayEnter.contains("Y")||arrayEnter.contains("y")){
+            for (int i = 0; i < count; i++) {
+                if (arrayEnter.equalsIgnoreCase("Y")) {
                     user.setUsername();
                     al.add(user.getUsername());
-                } else if (arrayEnter.contains("N")||arrayEnter.contains("n")){
+                } else if (arrayEnter.equalsIgnoreCase("N")) {
                     System.out.println("Okay, showing array.");
                 } else {
                     System.out.println("Error, please enter either 'Y' or 'N'.");
@@ -43,41 +56,25 @@ public class Main {
                 }
             }
 
-        } else {
-            System.out.println("Exiting.");
+            Collections.sort(al);
+
+            System.out.println(al);
+
+            System.out.println("Want to exit or retry? E for Exit, R for Retry.");
+            String enterExit = input.next();
+
+                if (enterExit.equalsIgnoreCase("E")){
+                    doNotExit = false;
+                } else if (enterExit.equalsIgnoreCase("R")){
+                    al.clear();
+                    System.out.println("Restarting program.");
+                } else {
+                    System.out.println("Error. Defaulting to exit.");
+                    doNotExit = false;
+                }
+            }
+             input.close();
         }
 
-
-
-        Collections.sort(al);
-
-        System.out.println(al);
-
     }
 
-    public static class User {
-       private String userName;
-
-       public void setUsername(){
-           Scanner userObj = new Scanner(System.in);
-           while (true){
-               System.out.print("Enter username: ");
-               String input = userObj.nextLine();
-
-               if (input.length() > 0){
-                   this.userName = input;
-                   break;
-               } else {
-                   System.out.println("Error: Username cannot be empty. Please input again.");
-               }
-           }
-
-       }
-
-       public String getUsername(){
-           return this.userName;
-       }
-    }
-
-
-}
