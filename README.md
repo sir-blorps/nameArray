@@ -2,4 +2,4 @@ This was a personal project I did as practice for my Intro to Java class. It's g
 Feel free to mess around with it!
 
 changes: 
-5/2/2025: I changed the program up a bit. Make userNameEnter a seperate class and allows the program to loop indefinetely so long as doNotExit remains true.
+5/2/2025: I changed the program up a bit. Make userNameEnter a separate class and allows the program to loop indefinitely so long as doNotExit remains true.
